@@ -1,4 +1,4 @@
-import {User} from '@/src/models/user';
+import {User} from '@/models/user';
 import React, {ReactNode, createContext, useEffect, useState} from 'react';
 import * as Keychain from 'react-native-keychain';
 

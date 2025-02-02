@@ -1,42 +1,41 @@
 import React from 'react';
 
-import {AuthProvider} from '@/src/contexts/AuthContext';
-import Home from '@/src/screens/Home';
-import Profile from '@/src/screens/Profile';
-import Icon from '@react-native-vector-icons/ionicons';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStaticNavigation} from '@react-navigation/native';
+import {AuthProvider} from '@/contexts/AuthContext';
 
-const MyTabs = createBottomTabNavigator({
-  screenOptions: {
-    headerShown: false,
-  },
-  screens: {
-    Home: {
-      screen: Home,
-      options: {
-        tabBarIcon: ({color}) => {
-          return <Icon name="home" size={20} color={color} />;
-        },
-      },
-    },
-    Profile: {
-      screen: Profile,
-      options: {
-        tabBarIcon: ({color}) => {
-          return <Icon name="person" size={20} color={color} />;
-        },
-      },
-    },
-  },
+import Routes from '@/routes';
+import NetInfo from '@react-native-community/netinfo';
+import {
+  onlineManager,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
+
+onlineManager.setEventListener(setOnline => {
+  return NetInfo.addEventListener(state => {
+    setOnline(!!state.isConnected);
+  });
 });
 
-const Navigation = createStaticNavigation(MyTabs);
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'yellow',
+  },
+};
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <AuthProvider>
-      <Navigation />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <PaperProvider theme={theme}>
+        <AuthProvider>
+          <Routes />
+        </AuthProvider>
+      </PaperProvider>
+    </QueryClientProvider>
   );
 }
