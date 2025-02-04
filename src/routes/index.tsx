@@ -7,6 +7,9 @@ import {createStaticNavigation} from '@react-navigation/native';
 const MyTabs = createBottomTabNavigator({
   screenOptions: {
     headerShown: false,
+    sceneStyle: {
+      backgroundColor: '#000',
+    },
   },
   screens: {
     Home: {
