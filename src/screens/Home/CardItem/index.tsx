@@ -13,11 +13,24 @@ interface Props {
 }
 
 export default function CardItem({show}: Props) {
+  const renderCountry = () => {
+    if (show?.network?.country?.name) {
+      return (
+        <Text testID="countryName" style={styles.text}>
+          {show?.network?.country?.name}
+        </Text>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <TouchableNativeFeedback>
       <View style={styles.container}>
         <View style={styles.flexRow}>
           <Image
+            testID="showImage"
             source={{
               uri: show.image.medium,
               cache: 'force-cache',
@@ -28,9 +41,7 @@ export default function CardItem({show}: Props) {
             <Text style={styles.title}>{show.name}</Text>
             <Rating average={show.rating.average} />
             <Text style={styles.text}>{show.language}</Text>
-            {show?.network?.country?.name && (
-              <Text style={styles.text}>{show?.network?.country?.name}</Text>
-            )}
+            {renderCountry()}
           </View>
         </View>
       </View>
@@ -42,7 +53,6 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 20,
     paddingLeft: 20,
-    backgroundColor: '#000',
     height: 240,
   },
   flexRow: {
