@@ -1,12 +1,6 @@
+import Rating from '@/components/Rating';
 import {Show} from '@/models/show';
-import Rating from '@/screens/Home/CardItem/Rating';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
 interface Props {
   show: Show;
@@ -26,26 +20,24 @@ export default function CardItem({show}: Props) {
   };
 
   return (
-    <TouchableNativeFeedback>
-      <View style={styles.container}>
-        <View style={styles.flexRow}>
-          <Image
-            testID="showImage"
-            source={{
-              uri: show.image.medium,
-              cache: 'force-cache',
-            }}
-            style={styles.image}
-          />
-          <View style={styles.flexColumn}>
-            <Text style={styles.title}>{show.name}</Text>
-            <Rating average={show.rating.average} />
-            <Text style={styles.text}>{show.language}</Text>
-            {renderCountry()}
-          </View>
+    <View style={styles.container}>
+      <View style={styles.flexRow}>
+        <Image
+          testID="showImage"
+          source={{
+            uri: show.image.original,
+            cache: 'force-cache',
+          }}
+          style={styles.image}
+        />
+        <View style={styles.flexColumn}>
+          <Text style={styles.title}>{show.name}</Text>
+          <Rating average={show.rating.average} />
+          <Text style={styles.text}>{show.language}</Text>
+          {renderCountry()}
         </View>
       </View>
-    </TouchableNativeFeedback>
+    </View>
   );
 }
 
@@ -71,7 +63,7 @@ const styles = StyleSheet.create({
   image: {
     width: 171,
     height: 240,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
   },
