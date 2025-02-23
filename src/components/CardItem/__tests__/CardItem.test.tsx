@@ -1,5 +1,5 @@
-import CardItem from '@/screens/Home/CardItem';
-import {mockShow} from '@/screens/Home/CardItem/__tests__/mocks';
+import CardItem from '@/components/CardItem';
+import {mockShow} from '@/components/CardItem/__tests__/mocks';
 import {render, screen} from '@testing-library/react-native';
 import React from 'react';
 
@@ -33,7 +33,7 @@ describe('CardItem', () => {
     render(<CardItem show={mockShow} />);
     const image = screen.getByTestId('showImage');
     expect(image.props.source).toEqual({
-      uri: 'https://example.com/image.jpg',
+      uri: mockShow.image.original,
       cache: 'force-cache',
     });
   });

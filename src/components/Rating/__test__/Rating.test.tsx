@@ -1,4 +1,4 @@
-import Rating from '@/screens/Home/CardItem/Rating';
+import Rating from '@/components/Rating';
 import {render} from '@testing-library/react-native';
 import React from 'react';
 
