@@ -32,7 +32,7 @@ export const AuthProvider = ({children}: Props) => {
       if (user) {
         const jsonValue = JSON.stringify(user);
         const result = await Keychain.setGenericPassword(
-          user.username,
+          user.email,
           jsonValue,
           {server: ''},
         );
