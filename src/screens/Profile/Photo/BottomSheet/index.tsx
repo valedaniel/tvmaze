@@ -78,7 +78,7 @@ const BottomSheetPhoto = forwardRef<BottomSheetModal, BottomSheetPhotoProps>(
             onPress={takePhoto}
             mode="contained"
             style={styles.button}>
-            Capturar foto
+            Capture photo
           </Button>
           <Button
             textColor={PRIMARY_COLOR}
@@ -89,7 +89,7 @@ const BottomSheetPhoto = forwardRef<BottomSheetModal, BottomSheetPhotoProps>(
             onPress={openLibrary}
             mode="contained"
             style={styles.button}>
-            Selecionar imagem
+            Select image
           </Button>
           <Button
             textColor="red"
@@ -100,7 +100,7 @@ const BottomSheetPhoto = forwardRef<BottomSheetModal, BottomSheetPhotoProps>(
             onPress={onRemovePhoto}
             mode="contained"
             style={styles.button}>
-            Remover
+            Remove
           </Button>
         </BottomSheetView>
       </BottomSheetModal>

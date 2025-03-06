@@ -39,7 +39,7 @@ describe('BottomSheetPhoto', () => {
       await sleep(TIME_TO_SLEEP);
     });
 
-    const expectedTexts = ['Capturar foto', 'Selecionar imagem', 'Remover'];
+    const expectedTexts = ['Capture photo', 'Select image', 'Remove'];
     await Promise.all(
       expectedTexts.map(async text => {
         expect(getByText(text)).toBeTruthy();
@@ -72,7 +72,7 @@ describe('BottomSheetPhoto', () => {
       await sleep(TIME_TO_SLEEP);
     });
 
-    fireEvent.press(getByText('Capturar foto'));
+    fireEvent.press(getByText('Capture photo'));
     expect(onUpdatePhoto).toHaveBeenCalledWith('test-uri');
   });
 
@@ -100,7 +100,7 @@ describe('BottomSheetPhoto', () => {
       await sleep(TIME_TO_SLEEP);
     });
 
-    fireEvent.press(getByText('Selecionar imagem'));
+    fireEvent.press(getByText('Select image'));
     expect(onUpdatePhoto).toHaveBeenCalledWith('test-uri');
   });
 
@@ -123,7 +123,7 @@ describe('BottomSheetPhoto', () => {
       await sleep(TIME_TO_SLEEP);
     });
 
-    fireEvent.press(getByText('Remover'));
+    fireEvent.press(getByText('Remove'));
     expect(onRemovePhoto).toHaveBeenCalled();
   });
 });

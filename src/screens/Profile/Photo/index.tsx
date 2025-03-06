@@ -8,10 +8,11 @@ import {Avatar} from 'react-native-paper';
 interface Props {
   photo?: string;
   name?: string;
-  onChangePhoto: (uri: string) => void;
+  disabled?: boolean;
+  onChangePhoto?: (uri: string) => void;
 }
 
-export default function Photo({onChangePhoto, photo, name}: Props) {
+export default function Photo({onChangePhoto, photo, name, disabled}: Props) {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const handlePhotoPress = () => {
@@ -30,12 +31,12 @@ export default function Photo({onChangePhoto, photo, name}: Props) {
   }, [name]);
 
   const onUpdatePhoto = (uri: string) => {
-    onChangePhoto(uri);
+    if (onChangePhoto) onChangePhoto(uri);
     bottomSheetRef?.current?.dismiss();
   };
 
   const onRemovePhoto = () => {
-    onChangePhoto('');
+    if (onChangePhoto) onChangePhoto('');
     bottomSheetRef?.current?.dismiss();
   };
 
@@ -58,7 +59,7 @@ export default function Photo({onChangePhoto, photo, name}: Props) {
 
   return (
     <>
-      <TouchableOpacity onPress={handlePhotoPress}>
+      <TouchableOpacity disabled={disabled} onPress={handlePhotoPress}>
         {renderContent()}
       </TouchableOpacity>
       <BottomSheetPhoto

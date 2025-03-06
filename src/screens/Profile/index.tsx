@@ -1,16 +1,23 @@
 import {useAuth} from '@/contexts/AuthContext';
 import DetailsProfile from '@/screens/Profile/Details';
 import FormProfile from '@/screens/Profile/Form';
-import React from 'react';
+import React, {useState} from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
 
 export default function Profile() {
   const {user} = useAuth();
 
-  const renderContent = () => {
-    if (user) return <DetailsProfile />;
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    return <FormProfile />;
+  const toggleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const renderContent = () => {
+    if (user && !isEditing)
+      return <DetailsProfile user={user} onPressEdit={toggleIsEditing} />;
+
+    return <FormProfile isEditing={isEditing} onFinishEdit={toggleIsEditing} />;
   };
 
   return (

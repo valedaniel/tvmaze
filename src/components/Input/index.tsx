@@ -21,6 +21,7 @@ interface InputProps<
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
   formState: FormState<T>;
+  formatValue?: (value: string) => string;
 }
 
 export default function Input<
@@ -31,6 +32,7 @@ export default function Input<
   formState,
   rules,
   name,
+  formatValue,
   ...rest
 }: InputProps<T, TFieldName, TFieldName>) {
   const {errors} = formState;
@@ -53,7 +55,7 @@ export default function Input<
             {...rest}
             onChangeText={onChange}
             onBlur={onBlur}
-            value={value}
+            value={formatValue ? formatValue(value) : value}
             error={!!errorFound}
           />
         )}
