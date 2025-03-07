@@ -3,7 +3,7 @@ import {User} from '@/models/user';
 import {ProvidersTest} from '@/tests/providers';
 import {fireEvent, render} from '@testing-library/react-native';
 import React from 'react';
-import DetailsProfile from './index';
+import DetailsProfile from '../';
 
 jest.mock('@/contexts/AuthContext', () => ({
   useAuth: jest.fn(),
@@ -51,7 +51,7 @@ describe('DetailsProfile', () => {
   it('calls setUser with null when Logout button is pressed', () => {
     const {getByText} = render(
       <ProvidersTest>
-        <DetailsProfile user={user} onPressEdit={onPressEdit} />{' '}
+        <DetailsProfile user={user} onPressEdit={onPressEdit} />
       </ProvidersTest>,
     );
 

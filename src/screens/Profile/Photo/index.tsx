@@ -1,4 +1,4 @@
-import BottomSheetPhoto from '@/screens/Profile/Photo/BottomSheet';
+import {BottomSheetPhoto} from '@/screens/Profile/Photo/BottomSheet';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useMemo, useRef} from 'react';
@@ -42,14 +42,24 @@ export default function Photo({onChangePhoto, photo, name, disabled}: Props) {
 
   const renderContent = () => {
     if (photo) {
-      return <Avatar.Image size={120} source={{uri: photo}} />;
+      return (
+        <Avatar.Image size={120} testID="avatar-image" source={{uri: photo}} />
+      );
     }
 
-    if (name) return <Avatar.Text size={120} label={firstLetterOfEachName} />;
+    if (name)
+      return (
+        <Avatar.Text
+          testID="avatar-text"
+          size={120}
+          label={firstLetterOfEachName}
+        />
+      );
 
     return (
       <Avatar.Icon
         size={120}
+        testID="avatar-icon"
         icon={({color, size}) => (
           <Icon name="person" color={color} size={size} />
         )}
@@ -59,7 +69,10 @@ export default function Photo({onChangePhoto, photo, name, disabled}: Props) {
 
   return (
     <>
-      <TouchableOpacity disabled={disabled} onPress={handlePhotoPress}>
+      <TouchableOpacity
+        testID="button-photo"
+        disabled={disabled}
+        onPress={handlePhotoPress}>
         {renderContent()}
       </TouchableOpacity>
       <BottomSheetPhoto

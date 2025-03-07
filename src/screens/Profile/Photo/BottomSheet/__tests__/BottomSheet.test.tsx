@@ -4,7 +4,7 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {fireEvent, render} from '@testing-library/react-native';
 import React, {act} from 'react';
 import {Callback, ImageLibraryOptions} from 'react-native-image-picker';
-import BottomSheetPhoto from '../index';
+import {BottomSheetPhoto} from '../index';
 const {launchCamera} = require('react-native-image-picker');
 const {launchImageLibrary} = require('react-native-image-picker');
 
