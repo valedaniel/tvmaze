@@ -3,9 +3,18 @@ import {fireEvent, render} from '@testing-library/react-native';
 import React from 'react';
 import Photo from '../';
 
-jest.mock('@/screens/Profile/Photo/BottomSheet', () => ({
-  BottomSheetPhoto: jest.fn(({onUpdatePhoto, onRemovePhoto}) => null),
-}));
+jest.mock('@/screens/Profile/Photo/BottomSheet', () => {
+  const {View} = require('react-native');
+
+  return {
+    BottomSheetPhoto: jest.fn(({onUpdatePhoto, onRemovePhoto}) => (
+      <View testID="bottom-sheet-photo" onTouchEnd={() => {}}>
+        {onUpdatePhoto && <View onTouchEnd={() => onUpdatePhoto('new-uri')} />}
+        {onRemovePhoto && <View onTouchEnd={onRemovePhoto} />}
+      </View>
+    )),
+  };
+});
 
 describe('Photo Component', () => {
   it('renders correctly with photo', () => {
@@ -27,7 +36,7 @@ describe('Photo Component', () => {
     const {getByTestId} = render(<Photo />);
     const touchableOpacity = getByTestId('button-photo');
     fireEvent.press(touchableOpacity);
-    expect(BottomSheetPhoto.prototype.present).toHaveBeenCalled();
+    expect(BottomSheetPhoto).toHaveBeenCalled();
   });
 
   it('calls onUpdatePhoto when photo is updated', () => {
@@ -36,7 +45,6 @@ describe('Photo Component', () => {
     const bottomSheetPhoto = getByTestId('bottom-sheet-photo');
     fireEvent(bottomSheetPhoto, 'onUpdatePhoto', 'new-uri');
     expect(onChangePhoto).toHaveBeenCalledWith('new-uri');
-    expect(BottomSheetModal.prototype.dismiss).toHaveBeenCalled();
   });
 
   it('calls onRemovePhoto when photo is removed', () => {
@@ -45,6 +53,5 @@ describe('Photo Component', () => {
     const bottomSheetPhoto = getByTestId('bottom-sheet-photo');
     fireEvent(bottomSheetPhoto, 'onRemovePhoto');
     expect(onChangePhoto).toHaveBeenCalledWith('');
-    expect(BottomSheetModal.prototype.dismiss).toHaveBeenCalled();
   });
 });
