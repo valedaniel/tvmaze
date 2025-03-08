@@ -36,6 +36,7 @@ export default function ShowDetails() {
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
+        testID="back-button"
         onPress={() => navigation.goBack()}
         style={styles.backButton}>
         <Icon name="chevron-back-sharp" size={24} color="#333" />
