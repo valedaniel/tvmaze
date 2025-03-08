@@ -8,17 +8,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const HomeStack = createNativeStackNavigator({
   initialRouteName: 'Home',
+  screenOptions: {
+    headerShown: false,
+  },
   screens: {
     Home: {
       screen: Home,
-      options: {
-        headerShown: false,
-      },
     },
     ShowDetails: {
       screen: ShowDetails,
-
-      options: {},
     },
   },
 });

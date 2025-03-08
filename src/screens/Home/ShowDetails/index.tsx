@@ -2,10 +2,17 @@ import Rating from '@/components/Rating';
 import {Show} from '@/models/show';
 import ShowService from '@/services/show.service';
 import {HomeStackParamsList} from '@/types/PublicStackParamList';
+import Icon from '@react-native-vector-icons/ionicons';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useQuery} from '@tanstack/react-query';
-import {useLayoutEffect} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export default function ShowDetails() {
   const {params} = useRoute<RouteProp<HomeStackParamsList>>();
@@ -20,15 +27,21 @@ export default function ShowDetails() {
     enabled: !!show?.id,
   });
 
-  useLayoutEffect(() => {
-    if (show?.name)
-      navigation.setOptions({
-        title: show?.name,
-      });
-  }, [navigation, show]);
-
   return (
-    <View style={styles.container}>
+    <ScrollView>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          backgroundColor: '#FFFFFF',
+          position: 'absolute',
+          zIndex: 1,
+          top: 20,
+          left: 20,
+          padding: 10,
+          borderRadius: 50,
+        }}>
+        <Icon name="chevron-back-sharp" size={20} />
+      </TouchableOpacity>
       <Image
         testID="showImage"
         source={{
@@ -37,16 +50,23 @@ export default function ShowDetails() {
         }}
         style={styles.image}
       />
-      <Rating average={show.rating.average} />
-      <Text>Episodes: {episodes?.length}</Text>
-    </View>
+      <View style={{padding: 10}}>
+        <Text style={{fontSize: 30}}>{show.name}</Text>
+        <Rating average={show.rating.average} />
+        <Text>Episodes: {episodes?.length}</Text>
+        <Text>Genres: {show.genres.join(', ')}</Text>
+        <Text>Language: {show.language}</Text>
+        <Text>Network: {show.network?.name}</Text>
+        <Text>Official Site: {show.officialSite}</Text>
+        <Text>Premiered: {show.premiered}</Text>
+        <Text>Status: {show.status}</Text>
+        <Text>Updated: {new Date(show.updated).toLocaleDateString()}</Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
   image: {
     width: '100%',
     height: 400,
