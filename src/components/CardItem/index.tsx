@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   flexRow: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#CECECE',
+    backgroundColor: '#f2f2f2',
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
   },
