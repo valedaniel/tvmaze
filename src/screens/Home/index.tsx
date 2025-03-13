@@ -2,10 +2,10 @@ import CardItem from '@/components/CardItem';
 import ShowService from '@/services/show.service';
 import {HomeStackParamsList} from '@/types/PublicStackParamList';
 import {PRIMARY_COLOR} from '@/utils/constants';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useScrollToTop} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useInfiniteQuery} from '@tanstack/react-query';
-import React from 'react';
+import React, {RefObject, useRef} from 'react';
 import {
   FlatList,
   Image,
@@ -19,6 +19,8 @@ import {ActivityIndicator} from 'react-native-paper';
 export default function Home() {
   const {navigate} =
     useNavigation<NativeStackNavigationProp<HomeStackParamsList>>();
+
+  const ref = useRef(null);
 
   const {
     data: shows,
@@ -37,9 +39,12 @@ export default function Home() {
     },
   });
 
+  useScrollToTop(ref as RefObject<any>);
+
   return (
     <View style={styles.container}>
       <FlatList
+        ref={ref}
         ListHeaderComponent={
           <View style={styles.flatListHeader}>
             <Image
