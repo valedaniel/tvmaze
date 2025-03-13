@@ -24,7 +24,7 @@ export default function ShowDetails() {
   const show = showParam as Show;
 
   const {data: episodes} = useQuery({
-    queryKey: ['show.episodes'],
+    queryKey: ['show.episodes', show!.id],
     queryFn: () => ShowService.getEpisodes(show!.id),
     enabled: !!show?.id,
   });

@@ -4,7 +4,7 @@ import {HomeStackParamsList} from '@/types/PublicStackParamList';
 import {PRIMARY_COLOR} from '@/utils/constants';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useQuery} from '@tanstack/react-query';
+import {useInfiniteQuery} from '@tanstack/react-query';
 import React from 'react';
 import {
   FlatList,
@@ -14,14 +14,27 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {ActivityIndicator} from 'react-native-paper';
 
 export default function Home() {
   const {navigate} =
     useNavigation<NativeStackNavigationProp<HomeStackParamsList>>();
 
-  const {data: shows} = useQuery({
+  const {
+    data: shows,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: ['show.list'],
-    queryFn: () => ShowService.getList(0),
+    queryFn: ({pageParam = 0}) => ShowService.getList(pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _allPages, lagePageParam) => {
+      if (lastPage.length === 0) {
+        return undefined;
+      }
+      return lagePageParam + 1;
+    },
   });
 
   return (
@@ -37,7 +50,7 @@ export default function Home() {
             <Text style={styles.title}>Welcome to TVMaze</Text>
           </View>
         }
-        data={shows}
+        data={shows?.pages.flat()}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => navigate('ShowDetails', {show: item})}>
@@ -46,6 +59,12 @@ export default function Home() {
         )}
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={styles.listContent}
+        onEndReached={() => {
+          if (hasNextPage) fetchNextPage();
+        }}
+        ListFooterComponent={() => {
+          if (isLoading) return <ActivityIndicator />;
+        }}
       />
     </View>
   );
