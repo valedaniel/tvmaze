@@ -11,6 +11,7 @@ Este é um aplicativo de TV desenvolvido com React Native. Ele permite que os us
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Scripts Disponíveis](#scripts-disponíveis)
+- [Aviso](#aviso)
 
 ## Instalação
 
@@ -116,6 +117,10 @@ tvmaze-app/
 - `npm run ios`: Builda e executa o aplicativo no simulador/dispositivo iOS.
 - `npm run test`: Executa os testes.
 - `npm run lint`: Executa o linter para verificar problemas no código.
+
+## Aviso
+
+Os testes foram realizados apenas no Android devido a uma limitação no meu hardware.
 
 ## Solução de Problemas
 
