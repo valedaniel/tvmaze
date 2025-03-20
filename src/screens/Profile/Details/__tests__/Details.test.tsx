@@ -1,15 +1,16 @@
-import {useAuth} from '@/contexts/AuthContext';
 import {User} from '@/models/user';
 import {ProvidersTest} from '@/tests/providers';
 import {fireEvent, render} from '@testing-library/react-native';
 import React from 'react';
 import DetailsProfile from '../';
 
-jest.mock('@/contexts/AuthContext', () => ({
-  useAuth: jest.fn(),
-}));
-
 const mockSetUser = jest.fn();
+
+jest.mock('@/stores/useAuthStore', () => ({
+  useAuthStore: jest.fn(() => ({
+    setUser: mockSetUser,
+  })),
+}));
 
 describe('DetailsProfile', () => {
   const user: User = {
@@ -22,7 +23,7 @@ describe('DetailsProfile', () => {
   const onPressEdit = jest.fn();
 
   beforeEach(() => {
-    (useAuth as jest.Mock).mockReturnValue({setUser: mockSetUser});
+    jest.clearAllMocks();
   });
 
   it('renders user details correctly', () => {

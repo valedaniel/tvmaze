@@ -1,8 +1,7 @@
-import React from 'react';
-
-import {AuthProvider} from '@/contexts/AuthContext';
+import React, {useEffect} from 'react';
 
 import Routes from '@/routes';
+import {useAuthStore} from '@/stores/useAuthStore';
 import {PRIMARY_COLOR, SECONDARY_COLOR} from '@/utils/constants';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import NetInfo from '@react-native-community/netinfo';
@@ -33,14 +32,18 @@ const theme = {
 const queryClient = new QueryClient();
 
 export default function App() {
+  const {loadCurrentUser} = useAuthStore();
+
+  useEffect(() => {
+    loadCurrentUser();
+  }, []);
+
   return (
     <GestureHandlerRootView style={styles.gestureHandler}>
       <BottomSheetModalProvider>
         <QueryClientProvider client={queryClient}>
           <PaperProvider theme={theme}>
-            <AuthProvider>
-              <Routes />
-            </AuthProvider>
+            <Routes />
           </PaperProvider>
         </QueryClientProvider>
       </BottomSheetModalProvider>

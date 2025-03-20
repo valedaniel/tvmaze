@@ -1,8 +1,8 @@
 import Input from '@/components/Input';
-import {useAuth} from '@/contexts/AuthContext';
 import {FormProfileModel} from '@/screens/Profile/Form/types';
 import {FormProfileSchema} from '@/screens/Profile/Form/yup.schema';
 import Photo from '@/screens/Profile/Photo';
+import {useAuthStore} from '@/stores/useAuthStore';
 import {yupResolver} from '@hookform/resolvers/yup';
 import Icon from '@react-native-vector-icons/ionicons';
 import {format, parseISO} from 'date-fns';
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function FormProfile({isEditing, onFinishEdit}: Props) {
-  const {user, setUser} = useAuth();
+  const {user, setUser} = useAuthStore();
 
   const [photo, setPhoto] = useState<string>();
   const [dateOpen, setDateOpen] = useState<boolean>(false);

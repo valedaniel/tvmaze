@@ -1,11 +1,11 @@
-import {useAuth} from '@/contexts/AuthContext';
 import DetailsProfile from '@/screens/Profile/Details';
 import FormProfile from '@/screens/Profile/Form';
+import {useAuthStore} from '@/stores/useAuthStore';
 import React, {useState} from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
 
 export default function Profile() {
-  const {user} = useAuth();
+  const {user} = useAuthStore();
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 

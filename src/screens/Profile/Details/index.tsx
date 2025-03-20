@@ -1,6 +1,6 @@
-import {useAuth} from '@/contexts/AuthContext';
 import {User} from '@/models/user';
 import Photo from '@/screens/Profile/Photo';
+import {useAuthStore} from '@/stores/useAuthStore';
 import {format, parseISO} from 'date-fns';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function DetailsProfile({user, onPressEdit}: Props) {
-  const {setUser} = useAuth();
+  const {setUser} = useAuthStore();
 
   return (
     <View style={styles.container}>

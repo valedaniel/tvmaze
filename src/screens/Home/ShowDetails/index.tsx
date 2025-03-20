@@ -30,7 +30,15 @@ export default function ShowDetails() {
   });
 
   const formatOfficialSite = () => {
-    return show.officialSite.replace(/^(https?:\/\/)?(www\.)?/, '');
+    if (show?.officialSite)
+      return show.officialSite.replace(/^(https?:\/\/)?(www\.)?/, '');
+
+    return 'Unknown';
+  };
+
+  const getGenres = () => {
+    if (show?.genres) return show.genres.join(', ');
+    return '';
   };
 
   return (
@@ -55,20 +63,23 @@ export default function ShowDetails() {
           <Rating average={show.rating.average} />
         </View>
         <Text style={styles.detailText}>Episodes: {episodes?.length}</Text>
-        <Text style={styles.detailText}>Genres: {show.genres.join(', ')}</Text>
-        <Text style={styles.detailText}>Language: {show.language}</Text>
-        <Text style={styles.detailText}>Network: {show.network?.name}</Text>
-        <TouchableOpacity onPress={() => openURL(show.officialSite)}>
+        <Text style={styles.detailText}>Genres: {getGenres()}</Text>
+        <Text style={styles.detailText}>Language: {show?.language}</Text>
+        <Text style={styles.detailText}>Network: {show?.network?.name}</Text>
+        <TouchableOpacity onPress={() => openURL(show?.officialSite)}>
           <Text style={styles.detailText}>
             Official Site: {formatOfficialSite()}
           </Text>
         </TouchableOpacity>
         <Text style={styles.detailText}>
-          Premiered: {format(parseISO(show.premiered), 'dd/MM/yyyy')}
+          Premiered:{' '}
+          {show?.premiered
+            ? format(parseISO(show.premiered), 'dd/MM/yyyy')
+            : null}
         </Text>
-        <Text style={styles.detailText}>Status: {show.status}</Text>
+        <Text style={styles.detailText}>Status: {show?.status}</Text>
         <Text style={styles.detailText}>
-          Updated: {format(show.updated, 'dd/MM/yyyy')}
+          Updated: {show?.updated ? format(show.updated, 'dd/MM/yyyy') : null}
         </Text>
       </View>
     </ScrollView>
@@ -110,6 +121,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 5,
+    height: '100%',
   },
   title: {
     fontSize: 28,
