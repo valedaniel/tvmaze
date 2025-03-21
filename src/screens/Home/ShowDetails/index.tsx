@@ -7,14 +7,16 @@ import Icon from '@react-native-vector-icons/ionicons';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useQuery} from '@tanstack/react-query';
 import {format, parseISO} from 'date-fns';
+import {TouchableOpacity} from 'react-native';
 import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+  BackButton,
+  Container,
+  DetailsContainer,
+  DetailText,
+  ShowImage,
+  Title,
+  TopPanel,
+} from './styled';
 
 export default function ShowDetails() {
   const {params} = useRoute<RouteProp<HomeStackParamsList>>();
@@ -42,98 +44,40 @@ export default function ShowDetails() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <TouchableOpacity
-        testID="back-button"
-        onPress={() => navigation.goBack()}
-        style={styles.backButton}>
+    <Container>
+      <BackButton testID="back-button" onPress={() => navigation.goBack()}>
         <Icon name="chevron-back-sharp" size={24} color="#333" />
-      </TouchableOpacity>
-      <Image
+      </BackButton>
+      <ShowImage
         testID="showImage"
         source={{
           uri: show.image.original,
           cache: 'force-cache',
         }}
-        style={styles.image}
       />
-      <View style={styles.detailsContainer}>
-        <View style={styles.topPanel}>
-          <Text style={styles.title}>{show.name}</Text>
+      <DetailsContainer>
+        <TopPanel>
+          <Title>{show.name}</Title>
           <Rating average={show.rating.average} />
-        </View>
-        <Text style={styles.detailText}>Episodes: {episodes?.length}</Text>
-        <Text style={styles.detailText}>Genres: {getGenres()}</Text>
-        <Text style={styles.detailText}>Language: {show?.language}</Text>
-        <Text style={styles.detailText}>Network: {show?.network?.name}</Text>
+        </TopPanel>
+        <DetailText>Episodes: {episodes?.length}</DetailText>
+        <DetailText>Genres: {getGenres()}</DetailText>
+        <DetailText>Language: {show?.language}</DetailText>
+        <DetailText>Network: {show?.network?.name}</DetailText>
         <TouchableOpacity onPress={() => openURL(show?.officialSite)}>
-          <Text style={styles.detailText}>
-            Official Site: {formatOfficialSite()}
-          </Text>
+          <DetailText>Official Site: {formatOfficialSite()}</DetailText>
         </TouchableOpacity>
-        <Text style={styles.detailText}>
+        <DetailText>
           Premiered:{' '}
           {show?.premiered
             ? format(parseISO(show.premiered), 'dd/MM/yyyy')
             : null}
-        </Text>
-        <Text style={styles.detailText}>Status: {show?.status}</Text>
-        <Text style={styles.detailText}>
+        </DetailText>
+        <DetailText>Status: {show?.status}</DetailText>
+        <DetailText>
           Updated: {show?.updated ? format(show.updated, 'dd/MM/yyyy') : null}
-        </Text>
-      </View>
-    </ScrollView>
+        </DetailText>
+      </DetailsContainer>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f8f8',
-  },
-  backButton: {
-    backgroundColor: '#fff',
-    position: 'absolute',
-    zIndex: 1,
-    top: 20,
-    left: 20,
-    padding: 10,
-    borderRadius: 50,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 5,
-  },
-  image: {
-    width: '100%',
-    height: 400,
-    resizeMode: 'cover',
-  },
-  detailsContainer: {
-    padding: 20,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    marginTop: -20,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: -2},
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 5,
-    height: '100%',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  detailText: {
-    fontSize: 16,
-    marginBottom: 5,
-    color: '#666',
-  },
-  topPanel: {
-    marginBottom: 10,
-  },
-});

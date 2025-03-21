@@ -2,7 +2,7 @@ import DetailsProfile from '@/screens/Profile/Details';
 import FormProfile from '@/screens/Profile/Form';
 import {useAuthStore} from '@/stores/useAuthStore';
 import React, {useState} from 'react';
-import {ImageBackground, StyleSheet} from 'react-native';
+import {Container} from './styled';
 
 export default function Profile() {
   const {user} = useAuthStore();
@@ -21,18 +21,8 @@ export default function Profile() {
   };
 
   return (
-    <ImageBackground
-      source={require('../../assets/profile_background.jpg')}
-      style={styles.container}>
+    <Container source={require('../../assets/profile_background.jpg')}>
       {renderContent()}
-    </ImageBackground>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-});

@@ -8,9 +8,16 @@ import Icon from '@react-native-vector-icons/ionicons';
 import {format, parseISO} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import DatePicker from 'react-native-date-picker';
-import {Button, TextInput} from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
+import {
+  Container,
+  ContainerInputs,
+  ContainerPhoto,
+  Form,
+  SaveButton,
+} from './styled';
 
 interface Props {
   isEditing: boolean;
@@ -55,7 +62,7 @@ export default function FormProfile({isEditing, onFinishEdit}: Props) {
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       <DatePicker
         modal
         open={dateOpen}
@@ -70,11 +77,11 @@ export default function FormProfile({isEditing, onFinishEdit}: Props) {
         }}
         maximumDate={new Date()}
       />
-      <View style={styles.containerPhoto}>
+      <ContainerPhoto>
         <Photo name={watch('name')} photo={photo} onChangePhoto={setPhoto} />
-      </View>
-      <View style={styles.form}>
-        <View style={styles.containerInputs}>
+      </ContainerPhoto>
+      <Form>
+        <ContainerInputs>
           <Input
             name="name"
             control={control}
@@ -117,44 +124,17 @@ export default function FormProfile({isEditing, onFinishEdit}: Props) {
               }
             />
           </TouchableOpacity>
-        </View>
-        <Button
-          mode="contained"
-          onPress={handleSubmit(onSubmit)}
-          style={styles.button}>
+        </ContainerInputs>
+        <SaveButton mode="contained" onPress={handleSubmit(onSubmit)}>
           Save
-        </Button>
-      </View>
-    </View>
+        </SaveButton>
+      </Form>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'flex-end',
-  },
-  containerPhoto: {
-    zIndex: 1,
-    top: 40,
-    alignItems: 'center',
-    width: '100%',
-  },
-  form: {
-    backgroundColor: '#FFFFFF',
-    borderTopRightRadius: 50,
-    borderTopLeftRadius: 50,
-    padding: 20,
-    paddingTop: 60,
-    flex: 1,
-    justifyContent: 'space-between',
-  },
   input: {
     width: '100%',
   },
-  button: {
-    marginTop: 20,
-  },
-  containerInputs: {flex: 1, height: '100%', gap: 10},
 });

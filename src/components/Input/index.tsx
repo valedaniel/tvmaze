@@ -6,8 +6,9 @@ import {
   FormState,
   RegisterOptions,
 } from 'react-hook-form';
-import {StyleSheet, View} from 'react-native';
-import {Text, TextInput, TextInputProps} from 'react-native-paper';
+import {View} from 'react-native';
+import {TextInput, TextInputProps} from 'react-native-paper';
+import {ErrorText} from './styled';
 
 interface InputProps<
   T extends FieldValues,
@@ -60,13 +61,7 @@ export default function Input<
           />
         )}
       />
-      {errorFound && (
-        <Text style={styles.errorText}>{errorFound?.message?.toString()}</Text>
-      )}
+      {errorFound && <ErrorText>{errorFound?.message?.toString()}</ErrorText>}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  errorText: {color: '#B3271C', fontSize: 12, marginTop: 5},
-});
