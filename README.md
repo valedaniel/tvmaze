@@ -80,8 +80,8 @@ tvmaze-app/
 │   ├── components/      # Componentes reutilizáveis
 │   ├── models/          # Modelos de interface
 │   ├── routes/          # Configuração das rotas
-│   ├── contexts/        # Contextos do React
 │   ├── screens/         # Telas do aplicativo
+│   ├── stores/          # Stores do Zustand
 │   ├── tests/           # Configurações globais de testes
 │   ├── services/        # Serviços de API e outras integrações
 │   └── utils/           # Funções utilitárias
@@ -109,6 +109,8 @@ tvmaze-app/
 - react-native-keychain
 - yup
 - @tanstack/react-query
+- zustand
+- styled-components
 
 ## Scripts Disponíveis
 
